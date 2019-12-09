@@ -13,6 +13,7 @@ import xyz.frt.serverfile.excepiton.FileNotFoundException;
 import xyz.frt.serverfile.excepiton.FileSystemException;
 import xyz.frt.serverfile.repository.FileRepository;
 import xyz.frt.serverfile.util.ApplicationContextProvider;
+import xyz.frt.serverfile.util.FileUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -44,7 +45,7 @@ public class FileSystemServiceImpl implements FileSystemService {
     }
 
     @Override
-    public List<File> list(Path dir) {
+    public List<File> list(Path dir, String relativePah) {
         assert dir != null;
         List<File> files = new ArrayList<>();
         try {
@@ -53,10 +54,14 @@ public class FileSystemServiceImpl implements FileSystemService {
                 File file = new File();
                 if (Files.isDirectory(path)) {
                     file.setIsDirectory(1);
-                    file.setFileType(ContentType.DIR.name());
+                    file.setFileType("folder");
+                } else {
+                    file.setIsDirectory(0);
+                    //log.info(path.getFileName() + ":" + Files.probeContentType(path));
+                    file.setFileType(FileUtils.parseFileType(Files.probeContentType(path)));
                 }
                 file.setFileName(path.getFileName().toString());
-                file.setPath(path.getParent().toString());
+                file.setPath(relativePah);
                 file.setSize(Files.size(path));
                 //System.out.println(path.getFileName());
                 files.add(file);
@@ -74,9 +79,13 @@ public class FileSystemServiceImpl implements FileSystemService {
 
     @Override
     public List<File> list(String path) {
-        assert path != null && !path.equals("");
+        assert path != null;
+        String relativePath = path;
+        User user = ApplicationContextProvider.getCurrentUser();
+        path = basePath + java.io.File.separator + user.getUsername() + path;
+        log.info(path);
         Path dir = Paths.get(path);
-        return list(dir);
+        return list(dir, relativePath);
     }
 
     @Override

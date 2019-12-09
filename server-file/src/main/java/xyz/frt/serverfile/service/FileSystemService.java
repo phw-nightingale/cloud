@@ -22,9 +22,10 @@ public interface FileSystemService {
     /**
      * 遍历文件
      * @param dir 当前路径
+     * @param relativePath relative path
      * @return
      */
-    List<File> list(Path dir);
+    List<File> list(Path dir, String relativePath);
 
     /**
      * 遍历文件
