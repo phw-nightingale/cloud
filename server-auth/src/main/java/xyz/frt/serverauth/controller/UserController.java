@@ -1,8 +1,10 @@
 package xyz.frt.serverauth.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import xyz.frt.serverauth.dto.UserLoginDTO;
+import xyz.frt.serverauth.service.UserService;
+import xyz.frt.servercommon.common.JsonResult;
+import xyz.frt.servercommon.entity.User;
 
 import java.security.Principal;
 
@@ -13,9 +15,26 @@ import java.security.Principal;
 @RestController
 public class UserController {
 
-    @GetMapping("/users/current")
-    public Principal getPrincipal(Principal principal) {
-        return principal;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
+    @GetMapping("/users/current")
+    public JsonResult getPrincipal(Principal principal) {
+        return JsonResult.success(principal);
+    }
+
+    @PostMapping("/users/registry")
+    public JsonResult postUser(User user) {
+        return JsonResult.success(userService.registry(user));
+    }
+
+    @PostMapping("/users/login")
+    public JsonResult loginUser(@RequestHeader("Authorization") String authorize,
+                                @RequestParam("grant_type") String grantType,
+                                User user) {
+        return JsonResult.success(userService.login(authorize, grantType, user));
+    }
 }

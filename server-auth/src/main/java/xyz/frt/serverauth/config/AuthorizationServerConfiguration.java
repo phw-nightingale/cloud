@@ -1,5 +1,6 @@
 package xyz.frt.serverauth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,9 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
@@ -31,8 +35,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private static final String JKS_PASS = "199798";
 
     @Bean
+    @Qualifier("tokenStore")
     public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtTokenEnhancer());
+        return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
     @Bean
@@ -80,7 +85,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .secret(passwordEncoder.encode("199798"))
                 .scopes("admin", "visitor")
                 .authorizedGrantTypes("implicit")
-                .redirectUris("http://localhost:8764/callback/")
+                .redirectUris("http://localhost:8762/callback/")
                 .accessTokenValiditySeconds(60 * 60);
     }
 

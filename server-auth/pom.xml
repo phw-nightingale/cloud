@@ -15,8 +15,8 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
@@ -48,6 +48,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
+        <!--resolve exception: resolve exception: Load balancer does not have available server for client-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,6 +70,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>xyz.frt</groupId>
+            <artifactId>server-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

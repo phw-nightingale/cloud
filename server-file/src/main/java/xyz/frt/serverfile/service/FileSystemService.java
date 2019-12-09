@@ -1,7 +1,9 @@
 package xyz.frt.serverfile.service;
 
-import xyz.frt.serverfile.entity.File;
+import org.springframework.web.multipart.MultipartFile;
+import xyz.frt.servercommon.entity.File;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -19,10 +21,59 @@ public interface FileSystemService {
 
     /**
      * 遍历文件
-     * @param basePath
-     * @param deep
+     * @param dir 当前路径
      * @return
      */
-    List<File> list(String basePath, Integer deep);
+    List<File> list(Path dir);
+
+    /**
+     * 遍历文件
+     * @param path 当前路径
+     * @return
+     */
+    List<File> list(String path);
+
+    /**
+     * 单文件上传
+     * @param file 上传的文件
+     * @param path 云盘位置
+     * @return
+     */
+    File upload(MultipartFile file, String path);
+
+    /**
+     * 创建文件夹
+     * @param parent
+     * @param name
+     * @return
+     */
+    File mkdir(String parent, String name);
+
+    /**
+     * 下载文件
+     * @param path 文件在云盘中的位置
+     * @return
+     */
+    void download(String path);
+
+    /**
+     * 根据文件ID下载文件
+     * @param id
+     */
+    void download(Long id);
+
+    /**
+     * 根据文件ID删除文件
+     * @param id
+     * @return
+     */
+    File remove(Long id);
+
+    /**
+     * 根据文件名查找文件
+     * @param filename
+     * @return
+     */
+    List<File> search(String filename);
 
 }

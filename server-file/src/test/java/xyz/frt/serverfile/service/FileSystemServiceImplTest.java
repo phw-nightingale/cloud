@@ -15,7 +15,7 @@ public class FileSystemServiceImplTest extends ServerFileApplicationTests {
 
     @Test
     public void testList() {
-        fileSystemService.list("/home/phw/Documents", 0);
+        fileSystemService.list("/home/phw/Downloads");
     }
 
 
