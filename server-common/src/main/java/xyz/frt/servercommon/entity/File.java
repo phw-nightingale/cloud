@@ -2,6 +2,7 @@ package xyz.frt.servercommon.entity;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author phw 937855602@qq.com
@@ -33,6 +34,12 @@ public class File {
 
     @Column(columnDefinition = "TINYINT COMMENT '是否文件夹'")
     private Integer isDirectory;
+
+    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'", insertable = false)
+    private Date createTime;
+
+    @Column(columnDefinition = "DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间'", insertable = false)
+    private Date updateTime;
 
     public String getFileName() {
         return fileName;
@@ -88,5 +95,21 @@ public class File {
 
     public void setIsDirectory(Integer isDirectory) {
         this.isDirectory = isDirectory;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

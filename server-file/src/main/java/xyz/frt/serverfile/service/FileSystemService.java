@@ -53,9 +53,10 @@ public interface FileSystemService {
     /**
      * 下载文件
      * @param path 文件在云盘中的位置
+     * @param filename file name
      * @return
      */
-    void download(String path);
+    void download(String path, String filename);
 
     /**
      * 根据文件ID下载文件

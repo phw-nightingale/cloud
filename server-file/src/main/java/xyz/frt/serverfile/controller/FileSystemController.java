@@ -2,6 +2,7 @@ package xyz.frt.serverfile.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.frt.servercommon.entity.File;
 import xyz.frt.serverfile.service.FileSystemService;
 import xyz.frt.servercommon.common.JsonResult;
 
@@ -24,9 +25,19 @@ public class FileSystemController {
         return JsonResult.success(fileSystemService.upload(file, path));
     }
 
-    @GetMapping("/files/{id}")
+    @PostMapping("/files/dir/{name}")
+    public JsonResult mkdir(@PathVariable String name, @RequestParam String path) {
+        return JsonResult.success(fileSystemService.mkdir(path, name));
+    }
+
+    @GetMapping("/files/id/{id}")
     public void download(@PathVariable Long id) {
         fileSystemService.download(id);
+    }
+
+    @GetMapping("/files/file")
+    public void download(File file) {
+        fileSystemService.download(file.getPath(), file.getFileName());
     }
 
     @DeleteMapping("/files/{id}")

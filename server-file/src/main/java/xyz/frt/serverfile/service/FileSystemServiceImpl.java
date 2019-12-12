@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,7 @@ public class FileSystemServiceImpl implements FileSystemService {
                     file.setIsDirectory(0);
                     //log.info(path.getFileName() + ":" + Files.probeContentType(path));
                     file.setFileType(FileUtils.parseFileType(Files.probeContentType(path)));
+                    file.setCreateTime(Date.from(Files.getLastModifiedTime(path).toInstant()));
                 }
                 file.setFileName(path.getFileName().toString());
                 file.setPath(relativePah);
@@ -83,7 +85,7 @@ public class FileSystemServiceImpl implements FileSystemService {
         String relativePath = path;
         User user = ApplicationContextProvider.getCurrentUser();
         path = basePath + java.io.File.separator + user.getUsername() + path;
-        log.info(path);
+        // log.info(path);
         Path dir = Paths.get(path);
         return list(dir, relativePath);
     }
@@ -125,7 +127,11 @@ public class FileSystemServiceImpl implements FileSystemService {
         Assert.notNull(parent, "Path parent cannot be null");
         Assert.notNull(name, "Directory name cannot be null");
         User user = ApplicationContextProvider.getCurrentUser();
-        String p = basePath.concat(java.io.File.separator).concat(user.getUsername()).concat(parent).concat(java.io.File.separator).concat(name);
+        String p = basePath.concat(java.io.File.separator).concat(user.getUsername()).concat(parent);
+        if (!"/".equals(parent)) {
+            p = p.concat(java.io.File.separator);
+        }
+        p = p.concat(name);
         try {
             Path path = Paths.get(p);
             if (!Files.exists(path)) {
@@ -139,18 +145,18 @@ public class FileSystemServiceImpl implements FileSystemService {
         }
         File dir = new File();
         dir.setFileName(name);
-        dir.setFileType("Directory");
+        dir.setFileType("folder");
         dir.setSize(0L);
-        dir.setPath(p);
+        dir.setPath(parent);
         return dir;
     }
 
     @Override
-    public void download(String path) {
+    public void download(String path, String filename) {
         Assert.notNull(path, "Download path cannot be null");
         path = basePath
                 .concat(java.io.File.separator).concat(ApplicationContextProvider.getCurrentUser().getUsername())
-                .concat(path);
+                .concat(path).concat(java.io.File.separator).concat(filename);
         Path p = Paths.get(path);
         if (!Files.exists(p)) {
             throw new FileNotFoundException("Download file cannot be found");
@@ -204,7 +210,8 @@ public class FileSystemServiceImpl implements FileSystemService {
         Assert.notNull(id, "ID cannot be null");
         Optional<File> opt = fileRepository.findById(id);
         Assert.isTrue(opt.isPresent(), "Download file with ID: " + id + " cannot be found");
-        download(opt.get().getPath());
+        File item = opt.get();
+        download(item.getPath(), item.getFileName());
     }
 
     @Override
