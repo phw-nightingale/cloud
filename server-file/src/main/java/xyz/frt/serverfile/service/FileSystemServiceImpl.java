@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.frt.servercommon.entity.ContentType;
 import xyz.frt.servercommon.entity.File;
 import xyz.frt.servercommon.entity.User;
 import xyz.frt.serverfile.excepiton.FileExistsException;
@@ -58,7 +57,7 @@ public class FileSystemServiceImpl implements FileSystemService {
                     file.setFileType("folder");
                 } else {
                     file.setIsDirectory(0);
-                    //log.info(path.getFileName() + ":" + Files.probeContentType(path));
+                    log.info(path.getFileName() + ":" + Files.probeContentType(path));
                     file.setFileType(FileUtils.parseFileType(Files.probeContentType(path)));
                     file.setCreateTime(Date.from(Files.getLastModifiedTime(path).toInstant()));
                 }
@@ -99,7 +98,7 @@ public class FileSystemServiceImpl implements FileSystemService {
         upload.setFileName(file.getOriginalFilename());
         upload.setIsDirectory(0);
         upload.setContentType(file.getContentType());
-        upload.setPath(path.concat(java.io.File.separator).concat(file.getOriginalFilename()));
+        upload.setPath(path);
 
         User user = ApplicationContextProvider.getCurrentUser();
         path = basePath.concat(java.io.File.separator).concat(user.getUsername()).concat(path);
@@ -116,6 +115,9 @@ public class FileSystemServiceImpl implements FileSystemService {
             }
             Files.createFile(p);
             file.transferTo(p);
+
+            upload.setFileType(FileUtils.parseFileType(Files.probeContentType(p)));
+
         } catch (IOException e) {
             throw new FileSystemException("File transfer failed:".concat(e.getMessage()));
         }
@@ -238,5 +240,55 @@ public class FileSystemServiceImpl implements FileSystemService {
     public List<File> search(String filename) {
         Assert.notNull(filename, "Search content cannot be empty");
         return fileRepository.findByFileNameLike("%".concat(filename).concat("%"));
+    }
+
+    @Override
+    public File remove(String path, String filename) {
+        Assert.notNull(path, "File path cannot be null");
+        User user = ApplicationContextProvider.getCurrentUser();
+        File res = new File();
+        if (filename != null && !"".equals(filename)) {
+            if ("/".equals(path)) {
+                path = path.concat(filename);
+            } else {
+                path = path.concat(java.io.File.separator).concat(filename);
+            }
+            path = basePath.concat(java.io.File.separator).concat(user.getUsername()).concat(path);
+            Path p = Paths.get(path);
+            if (!Files.exists(p)) {
+                throw new FileNotFoundException("File or Directory NOT FOUND");
+            }
+            res.setFileName(p.getFileName().toString());
+            try {
+                Files.deleteIfExists(p);
+            } catch (IOException e) {
+                if (e instanceof DirectoryNotEmptyException) {
+                    throw new FileSystemException("请先清空内容，再删除文件夹");
+                }
+                e.printStackTrace();
+            }
+            File file = fileRepository.findByPathAndFileName(path, filename);
+            if (file != null) {
+                fileRepository.delete(file);
+            }
+        } else {
+            Path p = Paths.get(path);
+            res.setFileName(p.getFileName().toString());
+            if (!Files.exists(p)) {
+                throw new FileNotFoundException("File or Directory NOT FOUND");
+            }
+            try {
+                Files.deleteIfExists(p);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<File> files = fileRepository.findAllByPathLike(path + "%");
+            if (files != null && files.size() != 0) {
+                for (File file: files) {
+                    fileRepository.delete(file);
+                }
+            }
+        }
+        return res;
     }
 }

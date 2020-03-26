@@ -15,4 +15,7 @@ public interface FileRepository extends JpaRepository<File, Long> {
 
     List<File> findByFileNameLike(String filename);
 
+    File findByPathAndFileName(String path, String filename);
+
+    List<File> findAllByPathLike(String pathLike);
 }

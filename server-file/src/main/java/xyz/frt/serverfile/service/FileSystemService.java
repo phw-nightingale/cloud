@@ -78,4 +78,12 @@ public interface FileSystemService {
      */
     List<File> search(String filename);
 
+    /**
+     * Remove file
+     * @param path
+     * @param filename
+     * @return
+     */
+    File remove(String path, String filename);
+
 }

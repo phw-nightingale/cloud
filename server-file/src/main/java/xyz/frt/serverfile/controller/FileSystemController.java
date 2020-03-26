@@ -20,7 +20,7 @@ public class FileSystemController {
         return JsonResult.success(fileSystemService.list(path));
     }
 
-    @PostMapping("/files")
+    @PostMapping("/files/upload")
     public JsonResult upload(@RequestParam MultipartFile file, @RequestParam String path) {
         return JsonResult.success(fileSystemService.upload(file, path));
     }
@@ -48,6 +48,11 @@ public class FileSystemController {
     @GetMapping("/files/filename/{filename}")
     public JsonResult search(@PathVariable String filename) {
         return JsonResult.success(fileSystemService.search(filename));
+    }
+
+    @DeleteMapping("/files/filename/{filename}")
+    public JsonResult remove(@PathVariable String filename, @RequestParam String path) {
+        return JsonResult.success(fileSystemService.remove(path, filename));
     }
 
 }

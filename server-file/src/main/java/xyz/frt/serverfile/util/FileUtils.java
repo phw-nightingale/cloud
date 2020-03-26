@@ -39,6 +39,10 @@ public class FileUtils {
             case "audio/mpeg":
                 type = "mp3";
                 break;
+
+            case "application/wps-office.pdf":
+                type = "pdf";
+                break;
         }
         return type;
     }
