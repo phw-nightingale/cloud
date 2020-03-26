@@ -1,15 +1,22 @@
 package xyz.frt.serverauth.service;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.util.ResourceUtils;
 import xyz.frt.serverauth.dao.UserRepository;
 import xyz.frt.serverauth.dto.UserLoginDTO;
 import xyz.frt.servercommon.common.BPwdEncoderUtil;
 import xyz.frt.servercommon.entity.JWT;
 import xyz.frt.servercommon.entity.User;
 import xyz.frt.servercommon.excepiton.UserLoginException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author phw 937855602@qq.com
@@ -59,6 +66,17 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user.getUsername(), "Username cannot be null");
         Assert.notNull(user.getPassword(), "Password cannot be null");
         String password = BPwdEncoderUtil.BCryptPassword(user.getPassword());
+
+        // 获取basic.json基本配置文件
+        String basicJson = "";
+        try {
+            File basic = ResourceUtils.getFile("classpath:template/basic.json");
+            basicJson = FileUtils.readFileToString(basic);
+        } catch (IOException e) {
+            throw new UserLoginException("获取配置文件出错");
+        }
+
+        user.setSave(basicJson);
         user.setPassword(password);
         User temp = userRepository.findByUsername(user.getUsername());
         Assert.isNull(temp, "Username is already exists");

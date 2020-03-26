@@ -21,6 +21,9 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false, columnDefinition = "VARCHAR(64) NOT NULL COMMENT '密码'")
     private String password;
 
+    @Column(columnDefinition = "TEXT COMMENT '个性化存档'")
+    private String save;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -89,6 +92,14 @@ public class User implements UserDetails, Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setSave(String save) {
+        this.save = save;
+    }
+
+    public String getSave() {
+        return save;
     }
 
     public void setClientType(Integer clientType) {
