@@ -1,21 +1,22 @@
 {
   "configs": {
     "topTaskBar": false,
-    "pathRes": "./res",
     "sound": false,
-    "shortcutsSortAuto": true,
     "wallpaper": "./res/img/wallpapers/bg1.jpg",
-    "wallpaperBlur": true,
+    "wallpaperBlur": false,
     "wallpaperSlide": false,
     "wallpaperSlideRandom": true,
     "wallpaperSlideItv": 1,
     "wallpaperSlideTime": 1519442460788,
     "wallpaperSlideIndex": 8,
     "openMax": 9,
-    "idCounter": 94,
+    "idCounter": 170,
     "themeColor": "rgba(2,35,64,1)",
     "autoThemeColor": true,
     "wallpapers": [
+      {
+        "image": "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="
+      },
       {
         "image": "./res/img/wallpapers/bg1.jpg",
         "preview": "./res/img/wallpapers/bg1_1.jpg"
@@ -27,8 +28,54 @@
       {
         "image": "./res/img/wallpapers/bg3.jpg",
         "preview": "./res/img/wallpapers/bg3_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg4.jpg",
+        "preview": "./res/img/wallpapers/bg4_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg5.jpg",
+        "preview": "./res/img/wallpapers/bg5_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg6.jpg",
+        "preview": "./res/img/wallpapers/bg6_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg7.jpg",
+        "preview": "./res/img/wallpapers/bg7_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg8.jpg",
+        "preview": "./res/img/wallpapers/bg8_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg9.jpg",
+        "preview": "./res/img/wallpapers/bg9_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg10.jpg",
+        "preview": "./res/img/wallpapers/bg10_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg11.jpg",
+        "preview": "./res/img/wallpapers/bg11_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg12.jpg",
+        "preview": "./res/img/wallpapers/bg12_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg13.jpg",
+        "preview": "./res/img/wallpapers/bg13_1.jpg"
+      },
+      {
+        "image": "./res/img/wallpapers/bg14.jpg",
+        "preview": "./res/img/wallpapers/bg14_1.jpg"
       }
     ],
+    "pathRes": "./res",
+    "shortcutsSortAuto": true,
     "debug": false,
     "winBlur": true
   },
@@ -38,31 +85,33 @@
       "autoRun": 0,
       "background": false,
       "badge": 0,
-      "desc": "YL-UI 系统设置面板",
+      "desc": "YLUI系统设置面板",
       "icon": {
         "type": "fa",
-        "bg": "gray",
+        "bg": "#436fde",
         "content": "gear"
       },
       "openMode": "normal",
       "plugin": false,
       "position": {
-        "x": "(x-860)/2",
-        "y": "y*0.1",
+        "x": "x*0.05",
+        "y": "y*0.05",
         "left": true,
         "top": true,
-        "autoOffset": false
+        "autoOffset": true
       },
-      "poweredBy": "Yuri2",
+      "version": "1.0.0",
+      "poweredBy": "YLUI",
       "resizable": true,
       "single": true,
       "size": {
-        "width": "860",
-        "height": "y*0.8"
+        "width": "920",
+        "height": "590"
       },
       "title": "系统设置",
-      "url": "./res/apps/system/index.html",
-      "customTile": ""
+      "url": "./res/apps/yl-system/index.html",
+      "customTile": "",
+      "urlRandomToken": true
     },
     "yl-color-picker": {
       "addressBar": false,
@@ -84,6 +133,7 @@
         "top": true,
         "autoOffset": false
       },
+      "version": "1.0.0",
       "poweredBy": "Yuri2",
       "resizable": false,
       "single": true,
@@ -93,7 +143,8 @@
       },
       "title": "取色器",
       "url": "./res/apps/colorPicker/colorPicker.html",
-      "customTile": ""
+      "customTile": "",
+      "urlRandomToken": true
     },
     "yl-browser": {
       "addressBar": true,
@@ -115,78 +166,18 @@
         "x": "x*0.1",
         "y": "y*0.1"
       },
+      "version": "1.0.0",
       "poweredBy": "Yuri2",
       "resizable": true,
       "single": false,
       "size": {
-        "height": "y*0.8",
+        "height": "y*0.8-80",
         "width": "x*0.8"
       },
       "title": "浏览器",
       "url": "./res/apps/browser/index.html",
-      "customTile": ""
-    },
-    "yl-server-import": {
-      "addressBar": false,
-      "autoRun": 0,
-      "background": false,
-      "badge": 0,
-      "desc": "",
-      "icon": {
-        "type": "fa",
-        "content": "cloud",
-        "bg": "#4da85b"
-      },
-      "openMode": "normal",
-      "plugin": false,
-      "position": {
-        "autoOffset": true,
-        "left": true,
-        "top": true,
-        "x": "x*0.1",
-        "y": "y*0.1"
-      },
-      "poweredBy": "Yuri2",
-      "resizable": true,
-      "single": true,
-      "size": {
-        "height": "y*0.8",
-        "width": "x*0.8"
-      },
-      "title": "YLUI云服务-同步",
-      "url": "https://ylui.yuri2.cn/index.php/home/main/import",
-      "customTile": ""
-    },
-    "yl-server-login": {
-      "addressBar": false,
-      "autoRun": 0,
-      "background": false,
-      "badge": 0,
-      "desc": "",
-      "icon": {
-        "type": "fa",
-        "content": "cloud",
-        "bg": "#4da85b"
-      },
-      "openMode": "normal",
-      "plugin": false,
-      "position": {
-        "autoOffset": true,
-        "left": true,
-        "top": true,
-        "x": "x*0.1",
-        "y": "y*0.1"
-      },
-      "poweredBy": "Yuri2",
-      "resizable": true,
-      "single": true,
-      "size": {
-        "height": "y*0.8",
-        "width": "x*0.8"
-      },
-      "title": "YLUI云服务-登录",
-      "url": "https://ylui.yuri2.cn/index.php/home/main/login",
-      "customTile": ""
+      "customTile": "",
+      "urlRandomToken": true
     },
     "yl-app-store": {
       "addressBar": false,
@@ -208,16 +199,315 @@
         "x": "x*0.1",
         "y": "y*0.1"
       },
+      "version": "1.0.0",
       "poweredBy": "Yuri2",
       "resizable": true,
       "single": true,
       "size": {
-        "height": "y*0.8",
+        "height": "y*0.8-80",
         "width": "x*0.8"
       },
       "title": "应用商店",
-      "url": "./res/apps/app-store/index.html",
-      "customTile": ""
+      "url": "https://appstore.ylui.yuri2.cn",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "yl-app-home": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "YLUI官方网站",
+      "icon": {
+        "type": "fa",
+        "content": "yoast",
+        "bg": "#6b96cf"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.1",
+        "y": "y*0.1"
+      },
+      "version": "1.0.0",
+      "poweredBy": "Yuri2",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "YLUI 官网",
+      "url": "https://ylui.yuri2.cn",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "yl-server": {
+      "addressBar": false,
+      "autoRun": 1,
+      "background": false,
+      "badge": 0,
+      "desc": "YLUI官方后台服务",
+      "icon": {
+        "type": "fa",
+        "content": "yoast",
+        "bg": "#6b96cf"
+      },
+      "openMode": "min",
+      "plugin": true,
+      "position": {
+        "autoOffset": false,
+        "left": false,
+        "top": false,
+        "x": "4",
+        "y": "4"
+      },
+      "version": "1.0.0",
+      "poweredBy": "Yuri2",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "80",
+        "width": "160"
+      },
+      "title": "YLUI官方后台服务",
+      "url": "https://server.ylui.yuri2.cn",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "ylui-documents": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "YLUI官方在线文档",
+      "icon": {
+        "type": "fa",
+        "content": "book",
+        "bg": "#d9ab4a"
+      },
+      "openMode": "outer",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "Yuri2",
+      "resizable": false,
+      "single": false,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "在线文档",
+      "url": "https://github.com:/yuri2peter/ylui/tree/master/documents",
+      "customTile": "",
+      "urlRandomToken": false
+    },
+    "ylui-gitee": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "",
+      "icon": {
+        "type": "str",
+        "content": "G",
+        "bg": "rgb(216,2,18)"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "",
+      "resizable": true,
+      "single": false,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "码云仓库",
+      "url": "https://gitee.com:/yuri2/ylui",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "ylui-github": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "github仓库地址",
+      "icon": {
+        "type": "fa",
+        "content": "github",
+        "bg": "#292929"
+      },
+      "openMode": "outer",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "github",
+      "resizable": false,
+      "single": false,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "github",
+      "url": "https://github.com:/yuri2peter/ylui",
+      "customTile": "",
+      "urlRandomToken": false
+    },
+    "ylui-fa": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "",
+      "icon": {
+        "type": "fa",
+        "content": "flag",
+        "bg": "rgb(53,154,238)"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "Font Awesome",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "Font Awesome",
+      "url": "https://fontawesome.com:/cheatsheet",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "ylui-image-host": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "",
+      "icon": {
+        "type": "fa",
+        "content": "image",
+        "bg": "#72b076"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "imgchr.com",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "路过图床",
+      "url": "https://imgchr.com/",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "ylui-cloud": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "",
+      "icon": {
+        "type": "fa",
+        "content": "image",
+        "bg": "#72b076"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "FourRoadTitan",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "y*0.8-80",
+        "width": "x*0.8"
+      },
+      "title": "夜莺云盘",
+      "url": "http://localhost:9528/",
+      "customTile": "",
+      "urlRandomToken": true
+    },
+    "ylui-login": {
+      "addressBar": false,
+      "autoRun": 0,
+      "background": false,
+      "badge": 0,
+      "desc": "",
+      "icon": {
+        "type": "fa",
+        "content": "image",
+        "bg": "#72b076"
+      },
+      "openMode": "normal",
+      "plugin": false,
+      "position": {
+        "autoOffset": true,
+        "left": true,
+        "top": true,
+        "x": "x*0.05",
+        "y": "y*0.05"
+      },
+      "version": "1.0.0",
+      "poweredBy": "FourRoadTitan",
+      "resizable": true,
+      "single": true,
+      "size": {
+        "height": "y*0.6-80",
+        "width": "x*0.4"
+      },
+      "title": "登录/注册",
+      "url": "/res/apps/login/index.html",
+      "customTile": "",
+      "urlRandomToken": true
     }
   },
   "shortcuts": [
@@ -228,22 +518,39 @@
       "hash": ""
     },
     {
-      "app": "yl-server-login",
-      "title": "切换用户",
-      "params": {},
-      "hash": ""
-    },
-    {
-      "app": "yl-server-import",
-      "title": "立即同步",
-      "params": {},
-      "hash": ""
-    },
-    {
       "app": "yl-app-store",
       "title": "应用商店",
       "params": {},
       "hash": ""
+    },
+    {
+      "app": "yl-app-home",
+      "title": "YLUI 官网",
+      "params": {},
+      "hash": ""
+    },
+    {
+      "title": "代码库",
+      "children": [
+        {
+          "app": "ylui-documents",
+          "title": "在线文档",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "app": "ylui-github",
+          "title": "github",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "app": "ylui-gitee",
+          "title": "码云仓库",
+          "params": {},
+          "hash": ""
+        }
+      ]
     }
   ],
   "tiles": [
@@ -252,12 +559,56 @@
       "data": [
         {
           "x": 0,
-          "y": 0,
-          "w": 6,
-          "h": 3,
+          "y": 6,
+          "w": 2,
+          "h": 2,
           "app": "yl-app-store",
           "title": "应用商店",
           "i": "91",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "w": 4,
+          "h": 2,
+          "app": "yl-system",
+          "title": "系统设置",
+          "i": "110",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "w": 2,
+          "h": 2,
+          "app": "yl-browser",
+          "title": "浏览器",
+          "i": "146",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "w": 6,
+          "h": 4,
+          "app": "yl-app-home",
+          "title": "YLUI 官网",
+          "i": "147",
+          "params": {},
+          "hash": ""
+        },
+        {
+          "x": 2,
+          "y": 6,
+          "w": 4,
+          "h": 2,
+          "app": "ylui-documents",
+          "title": "在线文档",
+          "i": "158",
           "params": {},
           "hash": ""
         }
@@ -265,6 +616,8 @@
     }
   ],
   "startMenu": {
+    "width": 620,
+    "height": 494,
     "sidebar": [
       {
         "app": "yl-browser",
@@ -284,15 +637,15 @@
         "params": {},
         "hash": ""
       },
-      "itemPushed-86": {
-        "app": "yl-server-login",
-        "title": "切换用户",
+      "itemPushed-89": {
+        "app": "yl-app-home",
+        "title": "YLUI 官网",
         "params": {},
         "hash": ""
       },
-      "itemPushed-87": {
-        "app": "yl-server-import",
-        "title": "立即同步",
+      "itemPushed-96": {
+        "app": "yl-system",
+        "title": "系统设置",
         "params": {},
         "hash": ""
       },
@@ -302,9 +655,21 @@
         "params": {},
         "hash": ""
       },
-      "itemPushed-89": {
-        "app": "yl-system",
-        "title": "系统设置",
+      "itemPushed-153": {
+        "app": "ylui-documents",
+        "title": "在线文档",
+        "params": {},
+        "hash": ""
+      },
+      "itemPushed-155": {
+        "app": "ylui-gitee",
+        "title": "码云仓库",
+        "params": {},
+        "hash": ""
+      },
+      "itemPushed-157": {
+        "app": "ylui-github",
+        "title": "github",
         "params": {},
         "hash": ""
       }

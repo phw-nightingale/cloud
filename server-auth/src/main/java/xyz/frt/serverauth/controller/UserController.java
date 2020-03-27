@@ -26,6 +26,11 @@ public class UserController {
         return JsonResult.success(principal);
     }
 
+    @GetMapping("/users/token")
+    public JsonResult getCurrent() {
+        return JsonResult.success(userService.getCurrent());
+    }
+
     @PostMapping("/users/registry")
     public JsonResult postUser(User user) {
         return JsonResult.success(userService.registry(user));
@@ -36,5 +41,11 @@ public class UserController {
                                 @RequestParam("grant_type") String grantType,
                                 User user) {
         return JsonResult.success(userService.login(authorize, grantType, user));
+    }
+
+    @PutMapping("/users/save")
+    public JsonResult uploadConfig(String save) {
+        userService.uploadConfig(save);
+        return JsonResult.success();
     }
 }

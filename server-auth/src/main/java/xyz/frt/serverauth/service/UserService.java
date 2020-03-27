@@ -27,4 +27,7 @@ public interface UserService extends UserDetailsService {
      */
     User registry(User user);
 
+    User getCurrent();
+
+    void uploadConfig(String save);
 }

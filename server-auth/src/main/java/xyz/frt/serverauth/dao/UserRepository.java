@@ -19,4 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     User findByUsername(String username);
 
+    /**
+     * 根据token查询当前用户
+     * @param token token
+     * @return 当期用户
+     */
+    User findByToken(String token);
 }

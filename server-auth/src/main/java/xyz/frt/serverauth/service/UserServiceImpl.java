@@ -9,6 +9,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.ResourceUtils;
 import xyz.frt.serverauth.dao.UserRepository;
 import xyz.frt.serverauth.dto.UserLoginDTO;
+import xyz.frt.serverauth.util.ApplicationContextProvider;
 import xyz.frt.servercommon.common.BPwdEncoderUtil;
 import xyz.frt.servercommon.entity.JWT;
 import xyz.frt.servercommon.entity.User;
@@ -55,6 +56,12 @@ public class UserServiceImpl implements UserService {
         if (jwt == null) {
             throw new UserLoginException("获取JWT错误");
         }
+
+        cu.setToken(jwt.getAccess_token());
+        userRepository.save(cu);
+
+        ApplicationContextProvider.setCurrentUser(cu);
+
         UserLoginDTO dto = new UserLoginDTO();
         dto.setUser(cu);
         dto.setJwt(jwt);
@@ -83,4 +90,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.saveAndFlush(user);
     }
 
+    @Override
+    public User getCurrent() {
+        return ApplicationContextProvider.getCurrentUser();
+    }
+
+    @Override
+    public void uploadConfig(String save) {
+        User user  = ApplicationContextProvider.getCurrentUser();
+        user.setSave(save);
+        userRepository.save(user);
+    }
 }

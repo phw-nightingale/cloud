@@ -25,7 +25,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/login", "/users/registry").permitAll()
+                .antMatchers("/users/login", "/users/registry", "/401", "/403", "/404").permitAll()
                 .antMatchers("/**").authenticated();
     }
 
@@ -33,6 +33,5 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore);
     }
-
 
 }
