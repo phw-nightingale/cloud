@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -16,6 +17,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import javax.sql.DataSource;
 
 /**
  * @author phw 937855602@qq.com
@@ -31,6 +34,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
+
+    private final DataSource dataSource;
 
     private static final String JKS_PASS = "199798";
 
@@ -49,21 +54,38 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         return converter;
     }
 
-    public AuthorizationServerConfiguration(BCryptPasswordEncoder passwordEncoder, @Qualifier("authenticationManager") AuthenticationManager authenticationManager) {
+    public AuthorizationServerConfiguration(BCryptPasswordEncoder passwordEncoder, @Qualifier("authenticationManager") AuthenticationManager authenticationManager, DataSource dataSource) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.dataSource = dataSource;
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("permitAll()");
+                .checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 
 
+    /**
+     * 自定义授权页面
+     *
+     * @param endpoints endpoints
+     * @throws Exception ex
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
+        endpoints
+                .tokenStore(tokenStore())
+                .tokenEnhancer(jwtTokenEnhancer())
+                .authenticationManager(authenticationManager)
+                /**
+                 * 此处配置特别说明：
+                 * 添加此处配置以开启/users/current接口，
+                 * 否则在Controller中获取到的Principal为空
+                 */
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
     /**
@@ -81,12 +103,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(60 * 60)
                 .and()
-                .withClient("app")
-                .secret(passwordEncoder.encode("199798"))
-                .scopes("admin", "visitor")
-                .authorizedGrantTypes("implicit")
-                .redirectUris("http://localhost:8762/callback/")
-                .accessTokenValiditySeconds(60 * 60);
+                .withClient("sso")
+                .secret(passwordEncoder.encode("sso"))
+                .authorizedGrantTypes("authorization_code", "refresh_token")
+                .redirectUris("https://www.baidu.com")
+                .scopes("all");
+        //clients.withClientDetails(new JdbcClientDetailsService(dataSource));
     }
 
 }

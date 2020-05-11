@@ -1,4 +1,4 @@
-package xyz.frt.serverauth.config;
+package xyz.frt.serverauth.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,7 +11,7 @@ import xyz.frt.servercommon.excepiton.UserLoginException;
  * create on 2019/10/21 下午5:41
  */
 @ControllerAdvice
-public class AuthServerControllerAdviceConfiguration {
+public class AuthServerControllerAdvice {
 
     @ResponseBody
     @ExceptionHandler(UserLoginException.class)

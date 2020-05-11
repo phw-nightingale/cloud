@@ -1,6 +1,8 @@
 package xyz.frt.serverfile.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.frt.servercommon.common.Pager;
 import xyz.frt.servercommon.entity.File;
 
 import java.nio.file.Path;
@@ -85,5 +87,7 @@ public interface FileSystemService {
      * @return
      */
     File remove(String path, String filename);
+
+    Page<File> find(Pager pager);
 
 }

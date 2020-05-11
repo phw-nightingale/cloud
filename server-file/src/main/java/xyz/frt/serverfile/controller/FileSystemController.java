@@ -2,6 +2,7 @@ package xyz.frt.serverfile.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.frt.servercommon.common.Pager;
 import xyz.frt.servercommon.entity.File;
 import xyz.frt.serverfile.service.FileSystemService;
 import xyz.frt.servercommon.common.JsonResult;
@@ -53,6 +54,11 @@ public class FileSystemController {
     @DeleteMapping("/files/filename/{filename}")
     public JsonResult remove(@PathVariable String filename, @RequestParam String path) {
         return JsonResult.success(fileSystemService.remove(path, filename));
+    }
+
+    @GetMapping("/files/page/{page}/size/{size}")
+    public JsonResult find(Pager pager) {
+        return JsonResult.success(fileSystemService.find(pager));
     }
 
 }

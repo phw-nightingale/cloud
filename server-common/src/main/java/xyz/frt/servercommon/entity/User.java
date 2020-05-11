@@ -27,6 +27,9 @@ public class User implements UserDetails, Serializable {
     @Column(columnDefinition = "TEXT COMMENT 'token'")
     private String token;
 
+    @Column(columnDefinition = "VARCHAR(255) COMMENT '头像'")
+    private String avatar;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -67,6 +70,14 @@ public class User implements UserDetails, Serializable {
 
     public String getToken() {
         return token;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {

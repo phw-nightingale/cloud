@@ -2,9 +2,13 @@ package xyz.frt.serverfile.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.frt.servercommon.common.Pager;
 import xyz.frt.servercommon.entity.File;
 import xyz.frt.servercommon.entity.User;
 import xyz.frt.serverfile.excepiton.FileExistsException;
@@ -57,7 +61,7 @@ public class FileSystemServiceImpl implements FileSystemService {
                     file.setFileType("folder");
                 } else {
                     file.setIsDirectory(0);
-                    log.info(path.getFileName() + ":" + Files.probeContentType(path));
+                    //log.info(path.getFileName() + ":" + Files.probeContentType(path));
                     file.setFileType(FileUtils.parseFileType(Files.probeContentType(path)));
                     file.setCreateTime(Date.from(Files.getLastModifiedTime(path).toInstant()));
                 }
@@ -102,7 +106,7 @@ public class FileSystemServiceImpl implements FileSystemService {
 
         User user = ApplicationContextProvider.getCurrentUser();
         path = basePath.concat(java.io.File.separator).concat(user.getUsername()).concat(path);
-        log.info("File will upload on path:" + path);
+        //log.info("File will upload on path:" + path);
         try {
             Path p = Paths.get(path);
             if (!Files.exists(p)) {
@@ -290,5 +294,21 @@ public class FileSystemServiceImpl implements FileSystemService {
             }
         }
         return res;
+    }
+
+    @Override
+    public Page<File> find(Pager pager) {
+        PageRequest pageable;
+        Assert.notNull(pager.getPage(), "页码不能为空");
+        Assert.notNull(pager.getSize(), "页距不能为空");
+        Sort.Direction direction;
+        if ("DESC".equals(pager.getDesc()) || "desc".equals(pager.getDesc())) {
+            direction = Sort.Direction.DESC;
+            Assert.notNull(pager.getOrder(), "至少需要一个属性来进行排序");
+            pageable = PageRequest.of(pager.getPage(), pager.getSize(), direction, pager.getOrder());
+        } else {
+            pageable = PageRequest.of(pager.getPage(), pager.getSize());
+        }
+        return fileRepository.findAll(pageable);
     }
 }

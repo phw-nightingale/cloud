@@ -1,7 +1,9 @@
 package xyz.frt.serverauth.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import xyz.frt.serverauth.dto.UserLoginDTO;
+import xyz.frt.servercommon.common.Pager;
 import xyz.frt.servercommon.entity.User;
 
 /**
@@ -27,7 +29,9 @@ public interface UserService extends UserDetailsService {
      */
     User registry(User user);
 
-    User getCurrent();
+    User getCurrent(String token);
 
-    void uploadConfig(String save);
+    void uploadConfig(String token, String save);
+
+    Page<User> find(Pager pager);
 }

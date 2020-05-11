@@ -1,7 +1,7 @@
 package xyz.frt.serverauth.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import xyz.frt.serverauth.dto.UserLoginDTO;
 import xyz.frt.serverauth.service.UserService;
 import xyz.frt.servercommon.common.JsonResult;
 import xyz.frt.servercommon.entity.User;
@@ -12,6 +12,7 @@ import java.security.Principal;
  * @author phw 937855602@qq.com
  * create on 19-7-26 上午10:15
  */
+@Slf4j
 @RestController
 public class UserController {
 
@@ -26,9 +27,12 @@ public class UserController {
         return JsonResult.success(principal);
     }
 
-    @GetMapping("/users/token")
-    public JsonResult getCurrent() {
-        return JsonResult.success(userService.getCurrent());
+    @GetMapping("/users/info")
+    public JsonResult getCurrent(@RequestHeader("Authorization") String access_token) {
+        if (access_token != null) {
+            access_token = access_token.split(" ")[1];
+        }
+        return JsonResult.success(userService.getCurrent(access_token));
     }
 
     @PostMapping("/users/registry")
@@ -37,15 +41,20 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public JsonResult loginUser(@RequestHeader("Authorization") String authorize,
+    public JsonResult loginUser(@RequestHeader("ClientDetails") String authorize,
                                 @RequestParam("grant_type") String grantType,
                                 User user) {
         return JsonResult.success(userService.login(authorize, grantType, user));
     }
 
     @PutMapping("/users/save")
-    public JsonResult uploadConfig(String save) {
-        userService.uploadConfig(save);
-        return JsonResult.success();
+    public JsonResult uploadConfig(@RequestHeader("Authorization") String token,  String save) {
+        if (token != null) {
+            token = token.split(" ")[1];
+            userService.uploadConfig(token, save);
+            return JsonResult.success();
+        }
+        return JsonResult.error(403, "token invalid");
     }
+
 }

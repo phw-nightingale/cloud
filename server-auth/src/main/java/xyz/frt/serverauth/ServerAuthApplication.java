@@ -7,8 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableEurekaClient
-@SpringBootApplication
 @EnableFeignClients
+@SpringBootApplication
 @EntityScan("xyz.frt.servercommon.entity")
 public class ServerAuthApplication {
 
